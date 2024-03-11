@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 // Backend dapat melakukan search film dengan nama
+// Contoh : http://localhost:3000/search?Title=Pokémon
 app.get("/search", (req, res) => {
   const { Title } = req.query;
   const movieIdx = movies.findIndex((movie) => movie.Title == Title);
