@@ -1,7 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
-const port = 3000;
+const port = 5000;
 
 let { movies } = require("./movies.js");
 let globalId = 0;
@@ -63,6 +63,21 @@ app.delete("/:id", (req, res) => {
 
 // Backend dapat melakukan update pada film sesuai dengan id pada request
 app.patch("/:id", (req, res) => {
+  const { id } = req.params;
+  const { Title, Year, imdbID, Type, Poster } = req.body;
+  const movieIdx = movies.findIndex((movie) => movie.id == Number(id));
+  if (movieIdx == -1) {
+    res.status(404).json({ message: "not found" });
+  }
+  movies[movieIdx].Title = Title;
+  movies[movieIdx].Year = Year;
+  movies[movieIdx].imdbID = imdbID;
+  movies[movieIdx].Type = Type;
+  movies[movieIdx].Poster = Poster;
+  res.status(200).json(movies[movieIdx]);
+});
+
+app.put("/:id", (req, res) => {
   const { id } = req.params;
   const { Title, Year, imdbID, Type, Poster } = req.body;
   const movieIdx = movies.findIndex((movie) => movie.id == Number(id));
